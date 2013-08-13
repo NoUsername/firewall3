@@ -264,6 +264,10 @@ static void print_target(struct fw3_rule *rule)
 			       rule->set_xmark.mark, rule->set_xmark.mask);
 		return;
 
+	case FW3_FLAG_LOG:
+		fw3_pr(" -j LOG --log-level 7\n");
+		return;
+
 	case FW3_FLAG_ACCEPT:
 	case FW3_FLAG_DROP:
 	case FW3_FLAG_NOTRACK:
@@ -342,6 +346,7 @@ expand_rule(struct fw3_state *state, enum fw3_family family,
 
 	if ((rule->target == FW3_FLAG_NOTRACK && table != FW3_TABLE_RAW) ||
 	    (rule->target == FW3_FLAG_MARK && table != FW3_TABLE_MANGLE) ||
+	    (rule->target == FW3_FLAG_LOG && table != FW3_TABLE_MANGLE) ||
 		(rule->target < FW3_FLAG_NOTRACK && table != FW3_TABLE_FILTER))
 		return;
 

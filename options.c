@@ -75,6 +75,7 @@ const char *fw3_flag_names[__FW3_FLAG_MAX] = {
 	"REJECT",
 	"DROP",
 	"NOTRACK",
+	"LOG",
 	"MARK",
 	"DNAT",
 	"SNAT",
