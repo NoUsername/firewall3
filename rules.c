@@ -59,6 +59,8 @@ const struct fw3_option fw3_rule_opts[] = {
 
 	FW3_OPT("target",              target,    rule,     target),
 
+	FW3_OPT("classify",            string,  rule,       classification),
+
 	{ }
 };
 
@@ -218,6 +220,10 @@ print_chain(struct fw3_rule *rule)
 	{
 		sprintf(chain, "zone_%s_notrack", rule->src.name);
 	}
+	else if (rule->target == FW3_FLAG_CLASSIFY)
+	{
+		sprintf(chain, "zone_%s_postrouting", rule->src.name);
+	}
 	else if (rule->target == FW3_FLAG_MARK)
 	{
 		sprintf(chain, "fwmark");
@@ -266,6 +272,9 @@ static void print_target(struct fw3_rule *rule)
 
 	case FW3_FLAG_LOG:
 		fw3_pr(" -j LOG --log-level 7\n");
+		return;
+	case FW3_FLAG_CLASSIFY:
+		fw3_pr(" -j CLASSIFY --set-class %s\n", rule->classification);
 		return;
 
 	case FW3_FLAG_ACCEPT:
@@ -347,6 +356,7 @@ expand_rule(struct fw3_state *state, enum fw3_family family,
 	if ((rule->target == FW3_FLAG_NOTRACK && table != FW3_TABLE_RAW) ||
 	    (rule->target == FW3_FLAG_MARK && table != FW3_TABLE_MANGLE) ||
 	    (rule->target == FW3_FLAG_LOG && table != FW3_TABLE_MANGLE) ||
+	    (rule->target == FW3_FLAG_CLASSIFY && table != FW3_TABLE_MANGLE) ||
 		(rule->target < FW3_FLAG_NOTRACK && table != FW3_TABLE_FILTER))
 		return;
 

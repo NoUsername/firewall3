@@ -69,17 +69,18 @@ enum fw3_flag
 	FW3_FLAG_DROP          = 8,
 	FW3_FLAG_NOTRACK       = 9,
 	FW3_FLAG_LOG           = 10,
-	FW3_FLAG_MARK          = 11,
-	FW3_FLAG_DNAT          = 12,
-	FW3_FLAG_SNAT          = 13,
-	FW3_FLAG_SRC_ACCEPT    = 14,
-	FW3_FLAG_SRC_REJECT    = 15,
-	FW3_FLAG_SRC_DROP      = 16,
-	FW3_FLAG_CUSTOM_CHAINS = 17,
-	FW3_FLAG_SYN_FLOOD     = 18,
-	FW3_FLAG_MTU_FIX       = 19,
-	FW3_FLAG_DROP_INVALID  = 20,
-	FW3_FLAG_HOTPLUG       = 21,
+	FW3_FLAG_CLASSIFY      = 11,
+	FW3_FLAG_MARK          = 12,
+	FW3_FLAG_DNAT          = 13,
+	FW3_FLAG_SNAT          = 14,
+	FW3_FLAG_SRC_ACCEPT    = 15,
+	FW3_FLAG_SRC_REJECT    = 16,
+	FW3_FLAG_SRC_DROP      = 17,
+	FW3_FLAG_CUSTOM_CHAINS = 18,
+	FW3_FLAG_SYN_FLOOD     = 19,
+	FW3_FLAG_MTU_FIX       = 20,
+	FW3_FLAG_DROP_INVALID  = 21,
+	FW3_FLAG_HOTPLUG       = 22,
 
 	__FW3_FLAG_MAX
 };
@@ -339,6 +340,8 @@ struct fw3_rule
 	struct fw3_mark set_xmark;
 
 	const char *extra;
+
+	const char *classification;
 };
 
 struct fw3_redirect
