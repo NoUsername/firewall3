@@ -355,8 +355,8 @@ expand_rule(struct fw3_state *state, enum fw3_family family,
 
 	if ((rule->target == FW3_FLAG_NOTRACK && table != FW3_TABLE_RAW) ||
 	    (rule->target == FW3_FLAG_MARK && table != FW3_TABLE_MANGLE) ||
-	    (rule->target == FW3_FLAG_LOG && table != FW3_TABLE_MANGLE) ||
 	    (rule->target == FW3_FLAG_CLASSIFY && table != FW3_TABLE_MANGLE) ||
+	    (rule->target == FW3_FLAG_LOG && table != FW3_TABLE_FILTER) ||
 		(rule->target < FW3_FLAG_NOTRACK && table != FW3_TABLE_FILTER))
 		return;
 
