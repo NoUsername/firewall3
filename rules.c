@@ -190,7 +190,7 @@ fw3_load_rules(struct fw3_state *state, struct uci_package *p)
 			warn_elem(e, "has no target specified, defaulting to REJECT");
 			rule->target = FW3_FLAG_REJECT;
 		}
-		else if (rule->target > FW3_FLAG_MARK)
+		else if (rule->target > FW3_FLAG_FILTER_MARK)
 		{
 			warn_elem(e, "has invalid target specified, defaulting to REJECT");
 			rule->target = FW3_FLAG_REJECT;
@@ -262,6 +262,7 @@ static void print_target(struct fw3_rule *rule)
 	switch(rule->target)
 	{
 	case FW3_FLAG_MARK:
+	case FW3_FLAG_FILTER_MARK:
 		if (rule->set_mark.set)
 			fw3_pr(" -j MARK --set-mark 0x%x/0x%x\n",
 			       rule->set_mark.mark, rule->set_mark.mask);
@@ -355,6 +356,7 @@ expand_rule(struct fw3_state *state, enum fw3_family family,
 
 	if ((rule->target == FW3_FLAG_NOTRACK && table != FW3_TABLE_RAW) ||
 	    (rule->target == FW3_FLAG_MARK && table != FW3_TABLE_MANGLE) ||
+	    (rule->target == FW3_FLAG_FILTER_MARK && table != FW3_TABLE_FILTER) ||
 	    (rule->target == FW3_FLAG_CLASSIFY && table != FW3_TABLE_MANGLE) ||
 	    (rule->target == FW3_FLAG_LOG && table != FW3_TABLE_FILTER) ||
 		(rule->target < FW3_FLAG_NOTRACK && table != FW3_TABLE_FILTER))
