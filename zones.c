@@ -39,6 +39,9 @@ static const struct fw3_rule_spec zone_chains[] = {
 	C(V4,  NAT,    SNAT,          "zone_%1$s_postrouting"),
 	C(V4,  NAT,    DNAT,          "zone_%1$s_prerouting"),
 
+	C(V4,  MANGLE, CLASSIFY,      "zone_%1$s_postrouting"),
+	C(V4,  MANGLE, CLASSIFY,      "zone_%1$s_prerouting"),
+
 	C(ANY, FILTER, CUSTOM_CHAINS, "input_%1$s_rule"),
 	C(ANY, FILTER, CUSTOM_CHAINS, "output_%1$s_rule"),
 	C(ANY, FILTER, CUSTOM_CHAINS, "forwarding_%1$s_rule"),
